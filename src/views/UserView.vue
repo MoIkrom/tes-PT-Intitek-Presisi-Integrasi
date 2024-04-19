@@ -65,7 +65,7 @@
                   scope="row"
                   class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                 >
-                  {{ user.firstName }} {{ user.lastName }}
+                  {{ user.firstName }} {{ maskName(user.lastName) }}
                 </th>
                 <td class="px-6 py-4">{{ user.gender }}</td>
                 <td class="px-6 py-4">{{ user.email }}</td>
@@ -225,7 +225,7 @@ export default {
     },
     alertDeleteUser(userId) {
       Swal.fire({
-        title: `Are you sure want to delete <br> product with ID : ${userId} ?`,
+        title: `Are you sure want to delete <br> User with ID : ${userId} ?`,
         text: "You won't be able to revert this!",
         icon: 'warning',
         showCancelButton: true,
@@ -237,11 +237,14 @@ export default {
           this.deleteUser(userId)
           Swal.fire({
             title: 'Deleted!',
-            html: `Success Deleted <br> Product with ID : ${userId}`,
+            html: `Success Deleted <br> User with ID : ${userId}`,
             icon: 'success'
           })
         }
       })
+    },
+    maskName(name) {
+      return name.replace(/./g, '*') // Mengganti setiap huruf dengan karakter '*'
     }
   },
   mounted() {
