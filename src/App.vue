@@ -5,8 +5,9 @@
       hidden:
         $route.path === '/user/' + $route.params.id ||
         $route.path === '/product/' + $route.params.id ||
-        $route.path === '/product/create'
-        
+        $route.path === '/product/create'||
+        $route.path === '/user/create'
+
     }"
   />
 
@@ -17,7 +18,8 @@
         hidden:
           $route.path === '/user/' + $route.params.id ||
           $route.path === '/product/' + $route.params.id ||
-          $route.path === '/product/create'
+          $route.path === '/product/create'||
+        $route.path === '/user/create'
       }"
     />
   </div>

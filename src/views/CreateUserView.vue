@@ -5,68 +5,66 @@
         class="flex justify-center items-center w-3/4 border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 relative overflow-x-auto sm:rounded-lg"
       >
         <div class="w-3/4 p-4 bg-white dark:bg-gray-800 dark:border-gray-700">
-          <form class="space-y-6" @submit.prevent="updateUser">
-            <h5 class="text-xl font-medium text-gray-900 dark:text-white">Update Data User</h5>
+          <form class="space-y-6" @submit.prevent="createUser()">
+            <h5 class="text-xl font-medium text-gray-900 dark:text-white">Crete New User</h5>
             <div>
-              <label
-                for="productName"
-                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >Product Name</label
+              <label for="Name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >Name</label
               >
               <input
                 type="text"
-                name="productName"
-                id="productName"
-                :value="productName"
-                @input="checkInput"
+                name="userName"
+                id="userName"
+                v-model="userName"
+                @change="handleuserName"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                 required
               />
             </div>
             <div>
               <label
-                for="productCategory"
+                for="phone"
                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >Category</label
+                >Phone</label
               >
               <input
                 type="text"
-                name="productCategory"
-                id="productCategory"
-                :value="productCategory"
-                @change="checkInput"
+                name="phone"
+                id="phone"
+                v-model="phone"
+                @change="handlephone"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                 required
               />
             </div>
             <div>
               <label
-                for="productPrice"
+                for="email"
                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >Price</label
+                >Email</label
               >
               <input
-                type="text"
-                name="productPrice"
-                id="productPrice"
-                :value="`$${productPrice}`"
-                @change="checkInput"
+                type="email"
+                name="email"
+                id="email"
+                v-model="email"
+                @change="handleemail"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                 required
               />
             </div>
             <div>
               <label
-                for="productName"
+                for="university"
                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >Stock</label
+                >University</label
               >
               <input
                 type="text"
-                name="productStok"
-                id="productStok"
-                :value="productStock"
-                @change="checkInput"
+                name="university"
+                id="university"
+                v-model="university"
+                @change="handleuniversity"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                 required
               />
@@ -74,7 +72,7 @@
             <div class="flex justify-between">
               <button
                 type="button"
-                @click="toProductView"
+                @click="toUserView"
                 class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
               >
                 <div class="flex gap-2 justify-start items-center">
@@ -122,7 +120,7 @@
                   </svg>
                   <p>Loading . . .</p>
                 </div>
-                <p v-else>Update</p>
+                <p v-else>Create</p>
               </button>
             </div>
           </form>
@@ -140,13 +138,10 @@ import router from '@/router'
 export default {
   data() {
     return {
-      editedProductName: '',
-      body: {},
-      productID: '',
-      productName: '',
-      productCategory: '',
-      productPrice: '',
-      productStock: '',
+      userName: '',
+      phone: '',
+      university: '',
+      email: '',
       loading: false,
       updateSuccess: false,
       isButtonDisabled: false
@@ -154,66 +149,63 @@ export default {
   },
 
   methods: {
-    fetchUser() {
-      axios
-        .get(`https://dummyjson.com/users/${this.$route.params.id}`)
-        .then((res) => {
-          this.productID = res.data.id
-          this.productName = res.data.brand
-          this.productCategory = res.data.category
-          this.productPrice = res.data.price
-          this.productStock = res.data.stock
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-    },
-
-    updateUser() {
+    createUser() {
       const body = {
-        productName: this.productName,
-        productCategory: this.productCategory,
-        productPrice: this.productPrice,
-        productStock: this.productStock
+        userName: this.userName,
+        phone: this.phone,
+        email: this.email,
+        university: this.university
       }
       this.loading = true
       axios
-        .put(`https://dummyjson.com/products/${this.$route.params.id}`, body, {
+        .post(`https://dummyjson.com/users/add`, body, {
           headers: {
             'Content-Type': 'application/json'
           }
         })
-        .then(() => {
+        .then((res) => {
           this.loading = false
           Swal.fire({
             position: 'center',
             icon: 'success',
-            title: `Success Update <br> Product with ID : ${this.productID}`,
-            showConfirmButton: false,
+            title: `Success Create New User`,
+            html: `<strong>User ID :</strong><i>${res.data.id}</i> <br/><strong> Name :</strong><i>${this.userName}</i>`,
+            showConfirmButton: true,
             timer: 2000
           })
           setTimeout(() => {
-            router.push('/product')
+            router.push('/user')
           }, 2000)
         })
         .catch((err) => {
           console.log(err)
         })
     },
+    handleuserName(event) {
+      this.userName = event.target.value
+    },
+    handlephone(event) {
+      this.phone = event.target.value
+    },
+    handleuniversity(event) {
+      this.university = event.target.value
+    },
+    handleemail(event) {
+      this.email = event.target.value
+    },
     checkInput() {
       this.isButtonDisabled =
-        this.productName.trim() === '' ||
-        this.productCategory.trim() === '' ||
-        this.productPrice.trim() === '' ||
+        this.userName.trim() === '' ||
+        this.phone.trim() === '' ||
+        this.email.trim() === '' ||
         this.productStock.trim() === ''
     },
-    toProductView() {
-      router.push('/product')
+    toUserView() {
+      router.push('/user')
     }
   },
 
   mounted() {
-    this.fetchProducts()
     this.$router = router
   }
 }

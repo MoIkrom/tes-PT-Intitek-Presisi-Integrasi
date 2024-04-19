@@ -1,6 +1,6 @@
 <template>
   <div class="container p-2">
-    <div class="h-screen container flex flex-col justify-center items-center">
+    <div class="my-7 h-screen container flex flex-col justify-center items-center">
       <!-- Tambahkan spinner di sini -->
       <div v-if="loading">
         <div class="text-center">
@@ -27,8 +27,19 @@
       </div>
       <!-- Tabel User -->
       <div v-else>
+        <div class="my-5">
+          <button
+            type="button"
+            @click="$router.push(`/user/create`)"
+            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+          >
+            Add New User
+          </button>
+        </div>
         <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-          <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+          <table
+            class="marginMobile w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
+          >
             <thead
               class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
             >
@@ -61,11 +72,22 @@
                 <td class="px-6 py-4">{{ user.phone }}</td>
                 <td class="px-6 py-4">{{ user.university }}</td>
                 <td class="px-6 py-4">
-                  <router-link
-                    :to="'/user/' + user.id"
-                    class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                    >Edit</router-link
-                  >
+                  <div class="flex gap-3">
+                    <button
+                      type="button"
+                      @click="$router.push(`/user/${user.id}`)"
+                      class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      type="button"
+                      @click="alertDeleteUser(user.id)"
+                      class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+                    >
+                      Delete
+                    </button>
+                  </div>
                 </td>
               </tr>
             </tbody>
@@ -125,6 +147,8 @@
 
 <script>
 import axios from 'axios'
+import Swal from 'sweetalert2'
+import router from '@/router'
 
 export default {
   data() {
@@ -190,10 +214,53 @@ export default {
     goToPage(page) {
       this.currentPage = page
       this.fetchUsers()
+    },
+    deleteUser(userId) {
+      axios
+        .delete(`https://dummyjson.com/users/${userId}`)
+        .then(() => {})
+        .catch((err) => {
+          console.log(err)
+        })
+    },
+    alertDeleteUser(userId) {
+      Swal.fire({
+        title: `Are you sure want to delete <br> product with ID : ${userId} ?`,
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.deleteUser(userId)
+          Swal.fire({
+            title: 'Deleted!',
+            html: `Success Deleted <br> Product with ID : ${userId}`,
+            icon: 'success'
+          })
+        }
+      })
     }
   },
   mounted() {
     this.fetchUsers()
+    this.$router = router
   }
 }
 </script>
+<style scoped>
+@media screen and (max-width: 640px) {
+  .justifyMobile {
+    justify-content: start;
+    margin-top: 100px;
+  }
+  .marginMobile {
+    margin-left: 430px;
+  }
+  .text-action {
+    text-align: start !important;
+  }
+}
+</style>
