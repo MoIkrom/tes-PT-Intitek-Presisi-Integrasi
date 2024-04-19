@@ -19,6 +19,7 @@
                 id="productName"
                 :value="productName"
                 @input="checkInput"
+                @change="handleName"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                 required
               />
@@ -34,7 +35,8 @@
                 name="productCategory"
                 id="productCategory"
                 :value="productCategory"
-                @change="checkInput"
+                @input="checkInput"
+                @change="handleproductCategory"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                 required
               />
@@ -50,7 +52,8 @@
                 name="productPrice"
                 id="productPrice"
                 :value="`$${productPrice}`"
-                @change="checkInput"
+                @input="checkInput"
+                @change="handleproductPrice"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                 required
               />
@@ -63,10 +66,11 @@
               >
               <input
                 type="text"
-                name="productStok"
-                id="productStok"
+                name="productStock"
+                id="productStock"
                 :value="productStock"
-                @change="checkInput"
+                @input="checkInput"
+                @change="handleproductStock"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                 required
               />
@@ -101,6 +105,10 @@
                 type="submit"
                 id="saveButton"
                 :disabled="isButtonDisabled"
+                :class="{
+                  'bg-gray-400 cursor-not-allowed  hover:bg-gray-400 focus:ring-4 focus:outline-none focus:ring-gray-300':
+                    isButtonDisabled
+                }"
                 class="w-1/3 text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
               >
                 <div v-if="loading" role="status" class="flex justify-center items-center gap-2">
@@ -148,8 +156,7 @@ export default {
       productPrice: '',
       productStock: '',
       loading: false,
-      updateSuccess: false,
-      isButtonDisabled: false
+      updateSuccess: false
     }
   },
 
@@ -200,15 +207,32 @@ export default {
           console.log(err)
         })
     },
-    checkInput() {
-      this.isButtonDisabled =
-        this.productName.trim() === '' ||
-        this.productCategory.trim() === '' ||
-        this.productPrice.trim() === '' ||
-        this.productStock.trim() === ''
-    },
+    checkInput() {},
     toProductView() {
       router.push('/product')
+    },
+
+    handleName(event) {
+      this.productName = event.target.value
+    },
+    handleproductCategory(event) {
+      this.productCategory = event.target.value
+    },
+    handleproductPrice(event) {
+      this.productPrice = event.target.value
+    },
+    handleproductStock(event) {
+      this.productStock = event.target.value
+    }
+  },
+  computed: {
+    isButtonDisabled() {
+      return !(
+        this.productName.length > 0 ||
+        this.productCategory.length > 0 ||
+        this.productStock.length > 0 ||
+        this.productPrice.length > 0
+      )
     }
   },
 

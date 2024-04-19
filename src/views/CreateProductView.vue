@@ -127,7 +127,7 @@
                   </svg>
                   <p>Loading . . .</p>
                 </div>
-                <p v-else>Update</p>
+                <p v-else>Create</p>
               </button>
             </div>
           </form>

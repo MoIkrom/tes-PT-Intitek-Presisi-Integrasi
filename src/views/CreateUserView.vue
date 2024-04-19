@@ -34,6 +34,7 @@
                 id="phone"
                 v-model="phone"
                 @change="handlephone"
+                @input="checkInput"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                 required
               />
@@ -66,6 +67,7 @@
                 name="university"
                 id="university"
                 v-model="university"
+                @input="checkInput"
                 @change="handleuniversity"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                 required
@@ -102,7 +104,10 @@
                 type="submit"
                 id="saveButton"
                 :disabled="isButtonDisabled"
-                :class="{ 'bg-gray-400 cursor-not-allowed  hover:bg-gray-400 focus:ring-4 focus:outline-none focus:ring-gray-300': isButtonDisabled }"
+                :class="{
+                  'bg-gray-400 cursor-not-allowed  hover:bg-gray-400 focus:ring-4 focus:outline-none focus:ring-gray-300':
+                    isButtonDisabled
+                }"
                 class="w-1/3 text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
               >
                 <div v-if="loading" role="status" class="flex justify-center items-center gap-2">
@@ -147,7 +152,7 @@ export default {
       university: '',
       email: '',
       loading: false,
-      updateSuccess: false,
+      updateSuccess: false
     }
   },
 
