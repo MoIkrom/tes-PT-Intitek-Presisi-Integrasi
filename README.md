@@ -1,4 +1,4 @@
-<h1 align="center"><u> Initek App</u></h1>
+<h1 align="center"><u> Intitek App</u></h1>
 <p align="left">
 <h2>Built with</h2>
 </p>
@@ -17,7 +17,7 @@
 
 # **About Merkle App**
 
-_Intite App is a website Application buil with Vue Js. It has some features like Dashboard , All User , Edit User, Add New User, Delete User, All Product , Edit Product, Add New Product and Delete Product_
+_Intitek App is a website Application buil with Vue Js. It has some features like Dashboard , All User , Edit User, Add New User, Delete User, All Product , Edit Product, Add New Product and Delete Product_
 
 ## Features
 
