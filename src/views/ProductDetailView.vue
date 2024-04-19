@@ -207,7 +207,6 @@ export default {
           console.log(err)
         })
     },
-    checkInput() {},
     toProductView() {
       router.push('/product')
     },
@@ -223,14 +222,23 @@ export default {
     },
     handleproductStock(event) {
       this.productStock = event.target.value
-    }
+    },  
+    checkInput() {
+    // Set tombol disable jika ada input yang kosong
+    this.isButtonDisabled = (
+      this.productName.length > 0 &&
+      this.productCategory.length > 0 &&
+      this.productStock.length > 0 &&
+      this.productPrice.length > 0
+    );
+  },
   },
   computed: {
     isButtonDisabled() {
       return !(
-        this.productName.length > 0 ||
-        this.productCategory.length > 0 ||
-        this.productStock.length > 0 ||
+        this.productName.length > 0 &&
+        this.productCategory.length > 0 &&
+        this.productStock.length > 0 &&
         this.productPrice.length > 0
       )
     }
