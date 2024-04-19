@@ -18,6 +18,7 @@
                 name="productName"
                 id="productName"
                 v-model="productName"
+                @input="checkInput"
                 @change="handleProductName"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                 required
@@ -34,6 +35,7 @@
                 name="productCategory"
                 id="productCategory"
                 v-model="productCategory"
+                @input="checkInput"
                 @change="handleproductCategory"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                 required
@@ -50,6 +52,7 @@
                 name="productPrice"
                 id="productPrice"
                 :value="`${productPrice}`"
+                @input="checkInput"
                 @change="handleproductPrice"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                 required
@@ -66,6 +69,7 @@
                 name="productStok"
                 id="productStok"
                 v-model="productStock"
+                @input="checkInput"
                 @change="handleproductStok"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                 required
@@ -75,6 +79,8 @@
               <button
                 type="button"
                 @click="toProductView"
+                :class="{ 'bg-gray-400 cursor-not-allowed': isButtonDisabled }"
+                :disabled="isButtonDisabled"
                 class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
               >
                 <div class="flex gap-2 justify-start items-center">
@@ -145,8 +151,7 @@ export default {
       productStok: '',
       productPrice: '',
       loading: false,
-      updateSuccess: false,
-      isButtonDisabled: false
+      updateSuccess: false
     }
   },
 
@@ -191,15 +196,20 @@ export default {
     handleproductPrice(event) {
       this.productPrice = event.target.value
     },
-    checkInput() {
-      this.isButtonDisabled =
-        this.productName.trim() === '' ||
-        this.productCategory.trim() === '' ||
-        this.productPrice.trim() === '' ||
-        this.productStock.trim() === ''
-    },
+
     toProductView() {
       router.push('/product')
+    },
+    checkInput() {}
+  },
+  computed: {
+    isButtonDisabled() {
+      return !(
+        this.productName.length > 0 &&
+        this.productCategory.length > 0 &&
+        this.productStok.length > 0 &&
+        this.productPrice.length > 0
+      )
     }
   },
 

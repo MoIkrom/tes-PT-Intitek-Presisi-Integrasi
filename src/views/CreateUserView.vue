@@ -17,6 +17,7 @@
                 id="userName"
                 v-model="userName"
                 @change="handleuserName"
+                @input="checkInput"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                 required
               />
@@ -49,6 +50,7 @@
                 id="email"
                 v-model="email"
                 @change="handleemail"
+                @input="checkInput"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                 required
               />
@@ -72,6 +74,7 @@
             <div class="flex justify-between">
               <button
                 type="button"
+                :disabled="isInputEmpty"
                 @click="toUserView"
                 class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
               >
@@ -99,6 +102,7 @@
                 type="submit"
                 id="saveButton"
                 :disabled="isButtonDisabled"
+                :class="{ 'bg-gray-400 cursor-not-allowed': isButtonDisabled }"
                 class="w-1/3 text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
               >
                 <div v-if="loading" role="status" class="flex justify-center items-center gap-2">
@@ -144,7 +148,6 @@ export default {
       email: '',
       loading: false,
       updateSuccess: false,
-      isButtonDisabled: false
     }
   },
 
@@ -164,6 +167,7 @@ export default {
           }
         })
         .then((res) => {
+          console.log(res)
           this.loading = false
           Swal.fire({
             position: 'center',
@@ -193,18 +197,21 @@ export default {
     handleemail(event) {
       this.email = event.target.value
     },
-    checkInput() {
-      this.isButtonDisabled =
-        this.userName.trim() === '' ||
-        this.phone.trim() === '' ||
-        this.email.trim() === '' ||
-        this.productStock.trim() === ''
-    },
+    checkInput() {},
     toUserView() {
       router.push('/user')
     }
   },
-
+  computed: {
+    isButtonDisabled() {
+      return !(
+        this.userName.length > 0 &&
+        this.phone.length > 0 &&
+        this.university.length > 0 &&
+        this.email.length > 0
+      )
+    }
+  },
   mounted() {
     this.$router = router
   }
