@@ -79,8 +79,6 @@
               <button
                 type="button"
                 @click="toProductView"
-                :class="{ 'bg-gray-400 cursor-not-allowed': isButtonDisabled }"
-                :disabled="isButtonDisabled"
                 class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
               >
                 <div class="flex gap-2 justify-start items-center">
@@ -107,6 +105,7 @@
                 type="submit"
                 id="saveButton"
                 :disabled="isButtonDisabled"
+                :class="{ 'bg-gray-400 cursor-not-allowed  hover:bg-gray-400 focus:ring-4 focus:outline-none focus:ring-gray-300': isButtonDisabled }"
                 class="w-1/3 text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
               >
                 <div v-if="loading" role="status" class="flex justify-center items-center gap-2">
