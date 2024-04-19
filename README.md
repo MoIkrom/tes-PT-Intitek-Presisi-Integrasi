@@ -15,7 +15,7 @@
 
 ## Introduction
 
-# **About Merkle App**
+# **About Intitek App**
 
 _Intitek App is a website Application buil with Vue Js. It has some features like Dashboard , All User , Edit User, Add New User, Delete User, All Product , Edit Product, Add New Product and Delete Product_
 
