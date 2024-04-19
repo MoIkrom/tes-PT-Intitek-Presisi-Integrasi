@@ -6,6 +6,7 @@
         $route.path === '/user/' + $route.params.id ||
         $route.path === '/product/' + $route.params.id ||
         $route.path === '/product/create'
+        
     }"
   />
 

@@ -1,35 +1,52 @@
-# tes_Intitek_Presisi_Integrasi
+<h1 align="center"><u> Initek App</u></h1>
+<p align="left">
+<h2>Built with</h2>
+</p>
 
-This template should help get you started developing with Vue 3 in Vite.
+[![Requirements](https://skillicons.dev/icons?i=vue)](https://skillicons.dev)
+<br>
 
-## Recommended IDE Setup
+## Table of Contents
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+- [Introduction](#introduction)
+- [Features](#features)
+- [Requirements](#requirements)
+- [Usage](#usage-for-development)
 
-## Customize configuration
+## Introduction
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+# **About Merkle App**
 
-## Project Setup
+_Intite App is a website Application buil with Vue Js. It has some features like Dashboard , All User , Edit User, Add New User, Delete User, All Product , Edit Product, Add New Product and Delete Product_
 
-```sh
-npm install
-```
+## Features
 
-### Compile and Hot-Reload for Development
+- Add New User
+- Get All User
+- Detail User
+- Edit User
+- Delete User
+- Add New Product
+- Get All Product
+- Detail Product
+- Edit Product
+- Delete Product
 
-```sh
-npm run dev
-```
+## Requirements
 
-### Compile and Minify for Production
+[![Requirements](https://skillicons.dev/icons?i=vue,vscode,vercel)](https://skillicons.dev)
 
-```sh
-npm run build
-```
+## Usage for development
 
-### Lint with [ESLint](https://eslint.org/)
+1. Open your terminal or command prompt.
+2. Type `git clone https://github.com/MoIkrom/tes-PT-Intitek-Presisi-Integrasi.git`
+3. Open folder with your text editor.
+4. Start to edit and development.
+5. Run Npm i on your terminal
+6. Run Npm run dev to lauch the app with local server
 
-```sh
-npm run lint
-```
+## Deployment Project
+
+- Deploymet Site [`here`](https://intitek-app.vercel.app/)
+
+<p align="center"><sub><b>&copy;2024 @IntitekApp</b></sub></p>

@@ -49,7 +49,7 @@
                 type="text"
                 name="productPrice"
                 id="productPrice"
-                :value="`$${productPrice}`"
+                :value="`${productPrice}`"
                 @change="handleproductPrice"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                 required
@@ -171,8 +171,8 @@ export default {
             position: 'center',
             icon: 'success',
             title: `Success Create New Product`,
-            html: `<strong>Product ID :</strong><i>${res.data.id}</i> <br/><strong>Product Name :</strong><i>${this.productName}</i>`,
-            showConfirmButton: true
+            html: `<strong>Product ID :</strong><i>${res.data.id}</i> <br/><strong>Product Name :</strong><i>${this.productName}</i><br/><button class="button bg-blue-500 rounded p-4 my-3 text-white" >Back to Home</button>`,
+            showConfirmButton: false
           })
         })
         .catch((err) => {
