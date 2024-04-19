@@ -8,16 +8,14 @@
           <form class="space-y-6" @submit.prevent="updateUser">
             <h5 class="text-xl font-medium text-gray-900 dark:text-white">Update Data User</h5>
             <div>
-              <label
-                for="productName"
-                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >Product Name</label
+              <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >Name</label
               >
               <input
                 type="text"
-                name="productName"
-                id="productName"
-                :value="productName"
+                name="Name"
+                id="Name"
+                :value="Name + ' ' + lastName"
                 @input="checkInput"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                 required
@@ -25,15 +23,15 @@
             </div>
             <div>
               <label
-                for="productCategory"
+                for="phone"
                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >Category</label
+                >Phone</label
               >
               <input
                 type="text"
-                name="productCategory"
-                id="productCategory"
-                :value="productCategory"
+                name="phone"
+                id="phone"
+                :value="phone"
                 @change="checkInput"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                 required
@@ -43,13 +41,13 @@
               <label
                 for="productPrice"
                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >Price</label
+                >Email</label
               >
               <input
-                type="text"
-                name="productPrice"
-                id="productPrice"
-                :value="`$${productPrice}`"
+                type="email"
+                name="email"
+                id="email"
+                :value="email"
                 @change="checkInput"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                 required
@@ -57,15 +55,15 @@
             </div>
             <div>
               <label
-                for="productName"
+                for="university"
                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >Stock</label
+                >university</label
               >
               <input
                 type="text"
-                name="productStok"
-                id="productStok"
-                :value="productStock"
+                name="university"
+                id="university"
+                :value="university"
                 @change="checkInput"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                 required
@@ -74,7 +72,7 @@
             <div class="flex justify-between">
               <button
                 type="button"
-                @click="toProductView"
+                @click="toUserView"
                 class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
               >
                 <div class="flex gap-2 justify-start items-center">
@@ -140,13 +138,13 @@ import router from '@/router'
 export default {
   data() {
     return {
-      editedProductName: '',
       body: {},
-      productID: '',
-      productName: '',
-      productCategory: '',
-      productPrice: '',
-      productStock: '',
+      userID: '',
+      Name: '',
+      lastName: '',
+      email: '',
+      phone: '',
+      university: '',
       loading: false,
       updateSuccess: false,
       isButtonDisabled: false
@@ -158,11 +156,13 @@ export default {
       axios
         .get(`https://dummyjson.com/users/${this.$route.params.id}`)
         .then((res) => {
-          this.productID = res.data.id
-          this.productName = res.data.brand
-          this.productCategory = res.data.category
-          this.productPrice = res.data.price
-          this.productStock = res.data.stock
+          console.log(res.data)
+          this.userID = res.data.id
+          this.Name = res.data.firstName
+          this.lastName = res.data.lastName
+          this.email = res.data.email
+          this.phone = res.data.phone
+          this.university = res.data.university
         })
         .catch((err) => {
           console.log(err)
@@ -171,14 +171,14 @@ export default {
 
     updateUser() {
       const body = {
-        productName: this.productName,
-        productCategory: this.productCategory,
-        productPrice: this.productPrice,
-        productStock: this.productStock
+        Name: this.Name,
+        email: this.email,
+        phone: this.phone,
+        university: this.university
       }
       this.loading = true
       axios
-        .put(`https://dummyjson.com/products/${this.$route.params.id}`, body, {
+        .put(`https://dummyjson.com/users/${this.$route.params.id}`, body, {
           headers: {
             'Content-Type': 'application/json'
           }
@@ -188,12 +188,12 @@ export default {
           Swal.fire({
             position: 'center',
             icon: 'success',
-            title: `Success Update <br> Product with ID : ${this.productID}`,
+            title: `Success Update <br> Users with ID : ${this.userID}`,
             showConfirmButton: false,
             timer: 2000
           })
           setTimeout(() => {
-            router.push('/product')
+            router.push('/user')
           }, 2000)
         })
         .catch((err) => {
@@ -207,13 +207,13 @@ export default {
         this.productPrice.trim() === '' ||
         this.productStock.trim() === ''
     },
-    toProductView() {
-      router.push('/product')
+    toUserView() {
+      router.push('/user')
     }
   },
 
   mounted() {
-    this.fetchProducts()
+    this.fetchUser()
     this.$router = router
   }
 }
